@@ -7,10 +7,12 @@ class Vertex implements Comparable<Vertex> {
     public ArrayList<Edge> adjacencies;
     public double maxDistance = -Double.POSITIVE_INFINITY;
     public Vertex previous;
+    public int value;
 
-    public Vertex(String argName) {
+    public Vertex(String argName, int value) {
         name = argName;
         adjacencies = new ArrayList<>();
+        this.value = value;
     }
 
     public String toString() {
@@ -53,48 +55,55 @@ public class Main {
     public static void computePaths(Vertex source) {
         source.maxDistance = 0.;
         PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
-         ArrayList<Vertex> explored = new ArrayList<>();
+        ArrayList<Vertex> explored = new ArrayList<>();
         vertexQueue.add(source);
-           explored.add(source);
+        explored.add(source);
 
         while (!vertexQueue.isEmpty()) {
 
             Vertex u = vertexQueue.poll();
-                      // Visit each edge exiting u
+            // Visit each edge exiting u
             ArrayList<Edge> neigh = u.adjacencies;
             for (Edge e : neigh) {
                 Vertex v = e.target;
                 double weight = e.weight;
-                double distanceThroughU = u.maxDistance + weight;
+                double distanceThroughU = u.maxDistance + u.value;
                 if (distanceThroughU > v.maxDistance) {
                     vertexQueue.remove(v);
 
                     v.maxDistance = distanceThroughU;
-                   // explored.add(v);
-                    if(u.previous != null &&!u.previous.equals(u)) {
+                    // explored.add(v);
+                    if (u.previous != null && !u.previous.equals(v)) {
                         v.previous = u;
+
                     }
-                 //   else {
-                  //      continue;
-                    //}
-                    if(!explored.contains(v)) {
-                        vertexQueue.add(v);
+                    if (u.previous != null && !u.previous.equals(v)) {
+                        System.out.println("h");
+                    }
+                    if (!explored.contains(v)) {
+
                         explored.add(v);
+                        vertexQueue.add(v);
+
                     }
+                    //   else {
+                    //      continue;
+                    //}
+
                 }
             }
         }
 
-          // source.previous = null;
-           //source.maxDistance =0.;
+        // source.previous = null;
+        //source.maxDistance =0.;
 
     }
 
     public static List<Vertex> getShortestPathTo(Vertex target) {
         List<Vertex> path = new ArrayList<>();
-        for (Vertex vertex = target; vertex != null; vertex = vertex.previous){
+        for (Vertex vertex = target; vertex != null; vertex = vertex.previous) {
 
-                path.add(vertex);
+            path.add(vertex);
 
         }
 
@@ -104,13 +113,13 @@ public class Main {
 
     public static void main(String[] args) {
         // mark all the vertices
-        Vertex A = new Vertex("A");
-        Vertex B = new Vertex("B");
-        Vertex D = new Vertex("D");
-        Vertex C = new Vertex("C");
-        Vertex E = new Vertex("E");
-        Vertex G = new Vertex("G");
-        Vertex F = new Vertex("F");
+        Vertex A = new Vertex("A",5);
+        Vertex B = new Vertex("B",6);
+        Vertex D = new Vertex("D",7);
+        Vertex C = new Vertex("C",9);
+        Vertex E = new Vertex("E",3);
+        Vertex G = new Vertex("G",2);
+        Vertex F = new Vertex("F",1);
         // A.previous = new Vertex();
         B.previous = A;
         Edge AB = new Edge(B, 10);
@@ -171,9 +180,9 @@ public class Main {
         ArrayList<List<Vertex>> paths = new ArrayList<>();
 
         computePaths(A);
-      //  B.previous = A;
-          List<Vertex> path3 = getShortestPathTo(G);
-          int a =0;
+        //  B.previous = A;
+        List<Vertex> path3 = getShortestPathTo(D);
+        int a = 0;
         System.out.println(path3);
         //da
       /*  for (Vertex e :
