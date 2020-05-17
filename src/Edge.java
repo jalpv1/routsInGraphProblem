@@ -1,12 +1,13 @@
 
 public class Edge {
     public final Vertex target;
-    public final double weight;
+    //public final double weight;
     public int time;
     public int cost;
 
-    public Edge(Vertex argTarget, double argWeight) {
+    public Edge(Vertex argTarget, int time,int cost) {
         target = argTarget;
-        weight = argWeight;
+        this.time = time;
+        this.cost = cost;
     }
 }

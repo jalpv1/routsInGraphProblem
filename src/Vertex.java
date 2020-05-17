@@ -8,11 +8,15 @@ class Vertex implements Comparable<Vertex> {
     public Vertex previous;
     public int value;
     public int time;
+    public int cost;
 
-    public Vertex(String argName, int value) {
+
+    public Vertex(String argName, int value,int time,int cost) {
         name = argName;
         adjacencies = new ArrayList<>();
         this.value = value;
+        this.time = time;
+        this.cost = cost;
     }
 
     public String toString() {
