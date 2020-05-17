@@ -1,55 +1,6 @@
-package com.company;
 
 import java.util.*;
 
-class Vertex implements Comparable<Vertex> {
-    public final String name;
-    public ArrayList<Edge> adjacencies;
-    public double maxDistance = -Double.POSITIVE_INFINITY;
-    public Vertex previous;
-    public int value;
-
-    public Vertex(String argName, int value) {
-        name = argName;
-        adjacencies = new ArrayList<>();
-        this.value = value;
-    }
-
-    public String toString() {
-        return name;
-    }
-
-    public int compareTo(Vertex other) {
-        return Double.compare(maxDistance, other.maxDistance);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Vertex vertex = (Vertex) o;
-        return Double.compare(vertex.maxDistance, maxDistance) == 0 &&
-                Objects.equals(name, vertex.name) &&
-                Objects.equals(adjacencies, vertex.adjacencies) &&
-                Objects.equals(previous, vertex.previous);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, adjacencies, maxDistance, previous);
-    }
-}
-
-
-class Edge {
-    public final Vertex target;
-    public final double weight;
-
-    public Edge(Vertex argTarget, double argWeight) {
-        target = argTarget;
-        weight = argWeight;
-    }
-}
 
 public class Main {
     public static void computePaths(Vertex source) {
@@ -94,8 +45,8 @@ public class Main {
             }
         }
 
-        // source.previous = null;
-        //source.maxDistance =0.;
+        source.previous = null;
+        source.maxDistance =0.;
 
     }
 
@@ -113,13 +64,13 @@ public class Main {
 
     public static void main(String[] args) {
         // mark all the vertices
-        Vertex A = new Vertex("A",5);
-        Vertex B = new Vertex("B",6);
-        Vertex D = new Vertex("D",7);
-        Vertex C = new Vertex("C",9);
-        Vertex E = new Vertex("E",3);
-        Vertex G = new Vertex("G",2);
-        Vertex F = new Vertex("F",1);
+        Vertex A = new Vertex("A", 5);
+        Vertex B = new Vertex("B", 6);
+        Vertex D = new Vertex("D", 7);
+        Vertex C = new Vertex("C", 9);
+        Vertex E = new Vertex("E", 3);
+        Vertex G = new Vertex("G", 2);
+        Vertex F = new Vertex("F", 1);
         // A.previous = new Vertex();
         B.previous = A;
         Edge AB = new Edge(B, 10);
@@ -180,28 +131,27 @@ public class Main {
         ArrayList<List<Vertex>> paths = new ArrayList<>();
 
         computePaths(A);
-        //  B.previous = A;
-        List<Vertex> path3 = getShortestPathTo(D);
+          B.previous = A;
+          List<Vertex> path3 = getShortestPathTo(C);
         int a = 0;
-        System.out.println(path3);
+         System.out.println(path3);
         //da
-      /*  for (Vertex e :
+        for (Vertex from :
                 graph) {
-            computePaths(e);
-
-            for (Vertex m :
+            computePaths(from);
+            System.out.println("From "+from.name);
+            for (Vertex to :
                     graph) {
-                if(!e.equals(m)) {
-                    List<Vertex> path = getShortestPathTo(e);
+                if (!from.equals(to)) {
+                    System.out.println("To "+ to.name);
+                    List<Vertex> path = getShortestPathTo(to);
+                    System.out.println("Created path "+path.size());
                     paths.add(path);
+                    System.out.println(paths.size());
                 }
             }
         }
 
 
-
-
-
-       */
     }
 }
